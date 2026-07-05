@@ -1,7 +1,0 @@
-.terraform/
-*.tfstate
-*.tfstate.*
-*.tfplan
-crash.log
-crash.*.log
-modules/storage/*.tar.gz

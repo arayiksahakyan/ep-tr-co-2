@@ -24,17 +24,18 @@ resource "azurerm_storage_account" "main" {
 
 resource "azurerm_storage_container" "app" {
   name                  = var.container_name
-  storage_account_id    = azurerm_storage_account.main.id
+  storage_account_name  = azurerm_storage_account.main.name
   container_access_type = var.container_access_type
 }
 
 resource "azurerm_storage_blob" "application_archive" {
-  name                 = var.archive_blob_name
-  storage_container_id = azurerm_storage_container.app.id
-  type                 = "Block"
-  source               = data.archive_file.application.output_path
-  content_md5          = data.archive_file.application.output_md5
-  content_type         = "application/gzip"
+  name                   = var.archive_blob_name
+  storage_account_name   = azurerm_storage_account.main.name
+  storage_container_name = azurerm_storage_container.app.name
+  type                   = "Block"
+  source                 = data.archive_file.application.output_path
+  content_md5            = data.archive_file.application.output_md5
+  content_type           = "application/gzip"
 }
 
 data "azurerm_storage_account_blob_container_sas" "app" {
