@@ -9,6 +9,8 @@ resource "azurerm_key_vault" "main" {
   public_network_access_enabled = true
   soft_delete_retention_days    = 7
   tags                          = var.tags
+
+  access_policy = []
 }
 
 resource "azurerm_key_vault_access_policy" "current_user" {
