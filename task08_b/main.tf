@@ -6,6 +6,10 @@ resource "azurerm_resource_group" "main" {
   tags     = local.common_tags
 }
 
+resource "azurerm_resource_provider_registration" "microsoft_app" {
+  name = "Microsoft.App"
+}
+
 module "keyvault" {
   source = "./modules/keyvault"
 
@@ -87,6 +91,7 @@ module "aca" {
   }
 
   depends_on = [
+    azurerm_resource_provider_registration.microsoft_app,
     module.acr,
     module.aci_redis,
   ]
