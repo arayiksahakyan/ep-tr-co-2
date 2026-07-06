@@ -4,7 +4,6 @@ resource "azurerm_key_vault" "main" {
   resource_group_name           = var.resource_group_name
   tenant_id                     = var.tenant_id
   sku_name                      = var.sku_name
-  access_policy                 = []
   enable_rbac_authorization     = false
   purge_protection_enabled      = false
   public_network_access_enabled = true
