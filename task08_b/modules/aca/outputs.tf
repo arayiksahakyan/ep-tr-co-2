@@ -5,7 +5,7 @@ output "environment_id" {
 
 output "fqdn" {
   description = "FQDN of the Azure Container App ingress."
-  value       = azurerm_container_app.main.ingress[0].fqdn
+  value       = azurerm_container_app.main.latest_revision_fqdn
 }
 
 output "id" {
