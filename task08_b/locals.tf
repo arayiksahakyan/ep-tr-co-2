@@ -1,4 +1,5 @@
 locals {
+  aca_location   = coalesce(var.aca_location, var.location)
   aca_env_name   = "${var.name_prefix}-cae"
   aca_name       = "${var.name_prefix}-ca"
   acr_name       = "${replace(var.name_prefix, "-", "")}cr"

@@ -1,7 +1,7 @@
 data "archive_file" "application" {
   type        = "tar.gz"
   source_dir  = var.application_source_dir
-  output_path = "${path.module}/${var.archive_blob_name}"
+  output_path = "${path.root}/.terraform/${var.archive_blob_name}"
 }
 
 resource "time_static" "sas_start" {}

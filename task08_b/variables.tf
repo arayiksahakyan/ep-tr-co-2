@@ -8,6 +8,12 @@ variable "location" {
   type        = string
 }
 
+variable "aca_location" {
+  description = "Azure region for Azure Container Apps resources. Defaults to location."
+  type        = string
+  default     = null
+}
+
 variable "name_prefix" {
   description = "Prefix used to derive task resource names."
   type        = string

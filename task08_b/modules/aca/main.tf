@@ -65,9 +65,10 @@ resource "azurerm_container_app" "main" {
   }
 
   ingress {
-    external_enabled = true
-    target_port      = 8080
-    transport        = "http"
+    allow_insecure_connections = true
+    external_enabled           = true
+    target_port                = 8080
+    transport                  = "http"
 
     traffic_weight {
       latest_revision = true

@@ -1,5 +1,0 @@
-.terraform/
-*.tfstate
-*.tfstate.*
-*.tfplan
-modules/storage/app-content.tar.gz

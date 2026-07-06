@@ -4,6 +4,7 @@ resource "azurerm_kubernetes_cluster" "main" {
   resource_group_name = var.resource_group_name
   dns_prefix          = var.dns_prefix
   sku_tier            = "Free"
+  oidc_issuer_enabled = true
   tags                = var.tags
 
   default_node_pool {
@@ -12,6 +13,12 @@ resource "azurerm_kubernetes_cluster" "main" {
     vm_size         = var.default_node_pool_vm_size
     os_disk_type    = var.default_node_pool_os_disk_type
     os_disk_size_gb = var.default_node_pool_os_disk_size_gb
+
+    upgrade_settings {
+      drain_timeout_in_minutes      = 0
+      max_surge                     = "10%"
+      node_soak_duration_in_minutes = 0
+    }
   }
 
   identity {

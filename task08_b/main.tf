@@ -6,10 +6,6 @@ resource "azurerm_resource_group" "main" {
   tags     = local.common_tags
 }
 
-resource "azurerm_resource_provider_registration" "microsoft_app" {
-  name = "Microsoft.App"
-}
-
 module "keyvault" {
   source = "./modules/keyvault"
 
@@ -76,7 +72,7 @@ module "aca" {
   app_image_name           = local.app_image_name
   image_tag                = local.app_image_tag
   key_vault_id             = module.keyvault.id
-  location                 = azurerm_resource_group.main.location
+  location                 = local.aca_location
   name                     = local.aca_name
   redis_hostname_secret_id = module.aci_redis.redis_hostname_secret_versionless_id
   redis_password_secret_id = module.aci_redis.redis_password_secret_versionless_id
@@ -91,7 +87,6 @@ module "aca" {
   }
 
   depends_on = [
-    azurerm_resource_provider_registration.microsoft_app,
     module.acr,
     module.aci_redis,
   ]
