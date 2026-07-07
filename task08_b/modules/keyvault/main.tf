@@ -8,8 +8,28 @@ resource "azurerm_key_vault" "main" {
   purge_protection_enabled      = false
   public_network_access_enabled = true
   soft_delete_retention_days    = 7
-  access_policy                 = []
   tags                          = var.tags
+}
+
+resource "azurerm_resource_group_template_deployment" "clear_recovered_access_policies" {
+  name                = "${var.name}-clear-access-policies"
+  resource_group_name = var.resource_group_name
+  deployment_mode     = "Incremental"
+
+  template_content = jsonencode({
+    "$schema"      = "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#"
+    contentVersion = "1.0.0.0"
+    resources = [
+      {
+        type       = "Microsoft.KeyVault/vaults/accessPolicies"
+        apiVersion = "2023-07-01"
+        name       = "${azurerm_key_vault.main.name}/replace"
+        properties = {
+          accessPolicies = []
+        }
+      }
+    ]
+  })
 }
 
 resource "azurerm_key_vault_access_policy" "current_user" {
@@ -27,4 +47,6 @@ resource "azurerm_key_vault_access_policy" "current_user" {
     "Restore",
     "Set",
   ]
+
+  depends_on = [azurerm_resource_group_template_deployment.clear_recovered_access_policies]
 }
