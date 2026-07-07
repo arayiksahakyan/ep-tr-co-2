@@ -8,6 +8,7 @@ resource "azurerm_key_vault" "main" {
   purge_protection_enabled      = false
   public_network_access_enabled = true
   soft_delete_retention_days    = 7
+  access_policy                 = []
   tags                          = var.tags
 }
 
